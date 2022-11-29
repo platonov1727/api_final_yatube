@@ -1,10 +1,11 @@
+import base64
+
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
-
-import base64
+from rest_framework.validators import UniqueTogetherValidator
 from django.core.files.base import ContentFile
 
-from posts.models import Comment, Group, Post, User, Follow
+from posts.models import Comment, Follow, Group, Post, User
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -14,14 +15,18 @@ class FollowSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault())
     following = serializers.SlugRelatedField(slug_field='username',
                                              queryset=User.objects.all())
+    validators = [
+        UniqueTogetherValidator(queryset=Follow.objects.all(),
+                                fields=['user', 'following'])
+    ]
 
-    def validate_follow(self, value):
-        if value == self.context['request'].user:
-            raise serializers.ValidationError()
-        return value
+    def validate(self, data):
+        if self.context['request'].user != data.get('following'):
+            return data
+        raise serializers.ValidationError('Нельзя подписаться на себя')
 
     class Meta:
-        fields = '__all__'
+        fields = ('__all__')
         model = Follow
 
 

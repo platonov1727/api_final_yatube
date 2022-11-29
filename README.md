@@ -1,10 +1,10 @@
-# API_YATUBE - АПИ сервис для Ятуб
+# API_YATUBE - API servise for YaTube
 
-Апи для сервиса ятуб. Создавайте посты, регистрируйтесь, подписывайтесь, оставляйте комментарии, загружайте фото!
+Make posts, post your comments, following, post images, be amazing!
 
 
 
-## Технологии
+## Tech
 
 - Django==4.1.3
 - django-filter==22.1
@@ -13,8 +13,6 @@
 - djoser==2.1.0
 - Pillow
 - SimplJwt
-- 
-со всем остальным можете ознакомиться в файлу requirements.txt
 
 ## Installation
 
@@ -33,9 +31,13 @@ pip install -r requirements.txt
 ```
 
 
-## Тестовые запросы
+## Endpoints
 
-To see all Endpoints
+To see all Endpoints go to
+
+```sh
+127.0.0.1:8000/api/v1/redoc/
+```
 
 
 ```sh
